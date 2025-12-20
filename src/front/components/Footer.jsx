@@ -1,11 +1,17 @@
-export const Footer = () => (
-	<footer className="footer mt-auto py-3 text-center">
-		<p>
-			Check the <a target="_blank" href="https://4geeks.com/docs/start/react-flask-template">template documentation</a> <i className="fa-solid fa-file"></i> for help.
-		</p>
-		<p>
-			Made with <i className="fa fa-heart text-danger" /> by{" "}
-			<a href="http://www.4geeksacademy.com">4Geeks Academy</a>
-		</p>
-	</footer>
-);
+export const Footer = () => {
+  return (
+    <footer className="footer text-white py-4 mt-auto">
+      <div className="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <div className="mb-2 mb-md-0 text-black">
+          &copy; {new Date().getFullYear()} Authentication JWT
+        </div>
+        <div>
+          <a href="/" className="text-black me-3 text-decoration-none">Inicio</a>
+          <a href="/signup" className="text-black me-3 text-decoration-none">Registro</a>
+          <a href="/login" className="text-black text-decoration-none">Login</a>
+        </div>
+      </div>
+    </footer>
+  );
+};
+

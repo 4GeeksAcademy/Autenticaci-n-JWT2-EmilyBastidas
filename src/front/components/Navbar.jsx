@@ -1,46 +1,53 @@
-import { Link } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { HiHomeModern } from "react-icons/hi2";
 import { TfiWrite } from "react-icons/tfi";
-import { CgProfile } from "react-icons/cg";
-import { TbDoorExit } from "react-icons/tb";
+import { RxExit } from "react-icons/rx";
+import { FaUserCircle } from "react-icons/fa";
+import { CiUser } from "react-icons/ci";
+
 
 export const Navbar = () => {
+  //estados
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [token, setToken] = useState(sessionStorage.getItem("token"));
+
+  useEffect(() => {
+  
+    setToken(sessionStorage.getItem("token"));
+  }, [location]);
+//elimina token y actualiza estado
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    setToken(null); 
+    navigate("/login");
+  };
 
   return (
-    <nav className="navbar navbar-expand-lg nav-gradient shadow">
-      <div className="container">
-        <Link to="/">
-          <span className="navbar-brand mb-0 h1"><FaHome className="home-icon" /></span>
-        </Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-          data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-          aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+    <nav className="navbar" style={{display: "flex", justifyContent: "space-between",padding: "1rem", backgroundColor:"rgb(254, 231, 222)"}}>
+      <div>
+        <Link to="/"><HiHomeModern  style={{ fontSize:"20px", color:"#010101ff" }} /></Link>
+      </div>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
-
-            <li className="nav-item">
-              <Link className="nav-link text-dark" to="/signup"><TfiWrite /> Registrarse</Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link text-dark" to="/login"><CgProfile />  Ingrese</Link>
-            </li>
-
-            <Link to="/home" className="nav-link text-dark"><TbDoorExit /></Link>
-
-          </ul>
-        </div>
-
+      <div>
+        {!token ? (
+          <>
+            <Link to="/login" style={{ marginRight: "1rem" }}> <CiUser style={{ fontSize:"20px", color:"#010101ff" }}/>
+            </Link>
+            <Link to="/signup"><TfiWrite /></Link>
+          </>
+        ) : (
+          <>
+            <Link to="/private" style={{ marginRight: "1rem" }}>
+              <FaUserCircle style={{ fontSize:"20px", color:"#010101ff" }} />
+            </Link>
+            <button onClick={logout} style={{ fontSize:"20px", background:"rgb(254, 231, 222)", border:"none" }} >
+              <RxExit style={{ fontSize:"20px", color:"#010101ff" }}/>
+            </button>
+          </>
+        )}
       </div>
     </nav>
   );
 };
-
-
-
-
-
-
